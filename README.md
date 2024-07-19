@@ -1,1 +1,1 @@
-PaperMc plugin inspired by industrial mods
+PaperMC plugin inspired by industrial mods
