@@ -1,73 +1,70 @@
 package me.udnek.industryu.machine;
 
 import com.destroystokyo.paper.ParticleBuilder;
-import me.udnek.industryu.gui.BoilerInventory;
-import me.udnek.industryu.techincal.MachineManager;
-import me.udnek.industryu.transfer.PipeConnector;
-import me.udnek.industryu.transfer.TransferBlock;
-import me.udnek.itemscoreu.utils.RightClickable;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
+import me.udnek.industryu.gui.BoilerGUI;
+import me.udnek.industryu.gui.abstraction.MachineGUI;
+import me.udnek.industryu.machine.abstraction.AbstractMachine;
+import me.udnek.industryu.machine.abstraction.GUIMachine;
+import me.udnek.industryu.machine.abstraction.OutputtableMachine;
+import me.udnek.industryu.matter.Matters;
+import me.udnek.industryu.matter.container.SpecificMatterContainer;
 import org.bukkit.Particle;
-import org.bukkit.World;
-import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
 
-public class Boiler extends Machine implements InventoryHolder, RightClickable {
+public class Boiler extends AbstractMachine implements GUIMachine, OutputtableMachine {
 
-    protected Inventory inventory;
+    public static final int TIME = 10;
+
+    protected SpecificMatterContainer steamContainer = new SpecificMatterContainer(Matters.STEAM, 100);
+    protected BoilerGUI gui;
     protected ParticleBuilder particle;
     protected int progress = 0;
 
     @Override
     public void initialize(BlockState blockState) {
         super.initialize(blockState);
-        this.inventory = new BoilerInventory().getInventory();
+        this.gui = new BoilerGUI(this);
         particle = new ParticleBuilder(Particle.SMOKE);
-        particle.count(10);
+        particle.count(15);
         particle.extra(0);
-        particle.offset(0.3, 0.3, 0.3);
+        particle.offset(0.25, 0.4, 0.25);
         particle.location(location);
-        particle.spawn();
     }
 
     @Override
     public void tick() {
-        if (Bukkit.getCurrentTick() % 5 != 0) return;
+        if (shouldSkipTick(5)) return;
+
+        gui.synchronizeWithMachine();
 
         if (progress == 0){
-            ItemStack item = inventory.getItem(0);
-            if (item == null) return;
-            inventory.setItem(0, item.subtract());
+            if (steamContainer.isFull()){
+                output(steamContainer);
+                return;
+            }
+            ItemStack fuel = gui.takeFuel();
+            if (fuel == null) return;
             progress = 1;
-        }
-        else if (progress < 5){
+        } else if (progress < TIME){
+            progress++;
+            gui.synchronizeWithMachine();
             particle.spawn();
-            ItemStack item = inventory.getItem(3);
-            item.setAmount(progress);
-            inventory.setItem(3, item);
-            progress += 1;
-        }
-        else {
-            inventory.setItem(inventory.getSize()-1, new ItemStack(Material.GOLD_INGOT));
+        } else {
             progress = 0;
-            new PipeConnector().start(30, BlockFace.DOWN, TransferBlock.getAlong(location, BlockFace.UP));
+            steamContainer.add(10);
+            output(steamContainer);
         }
 
     }
 
-    @Override
-    public @NotNull Inventory getInventory() {
-        return inventory;
+
+    public SpecificMatterContainer getSteamContainer() {
+        return steamContainer;
     }
 
+    public int getProgress() {return progress;}
+
     @Override
-    public void onRightClicks(PlayerInteractEvent playerInteractEvent) {
-        playerInteractEvent.getPlayer().openInventory(inventory);
-    }
+    public MachineGUI getGUI() {return gui;}
 }

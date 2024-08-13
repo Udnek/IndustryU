@@ -1,16 +1,17 @@
-package me.udnek.industryu.gui;
+package me.udnek.industryu.gui.abstraction;
 
 import me.udnek.industryu.item.Items;
 import me.udnek.itemscoreu.custominventory.ConstructableCustomInventory;
-import me.udnek.itemscoreu.utils.LogUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
-public abstract class MachineInventory extends ConstructableCustomInventory {
+public abstract class MachineGUI extends ConstructableCustomInventory {
 
     protected int[] inputSlots;
     protected int[] outputSlots;
@@ -41,6 +42,7 @@ public abstract class MachineInventory extends ConstructableCustomInventory {
         return Component.translatable(this.getRawDisplayName()).color(NamedTextColor.RED);
     }
 
+    public abstract void synchronizeWithMachine();
     protected abstract int[] getInputSlots();
     protected abstract int[] getOutputSlots();
 
@@ -89,5 +91,25 @@ public abstract class MachineInventory extends ConstructableCustomInventory {
             case PLACE_ALL, PLACE_SOME, PLACE_ONE, SWAP_WITH_CURSOR -> true;
             default -> false;
         };
+    }
+
+    protected @Nullable ItemStack takeItem(int slot, int amount){
+        ItemStack item = inventory.getItem(slot);
+        if (item == null) return null;
+        if (item.getAmount() < amount){
+            inventory.setItem(slot, null);
+            return item;
+        }
+        item.subtract(amount);
+        inventory.setItem(slot, item);
+        item.setAmount(amount);
+        return item;
+    }
+
+    protected void setAmount(int slot, int amount){
+        ItemStack item = inventory.getItem(slot);
+        if (item == null) return;
+        item.setAmount(amount);
+        inventory.setItem(slot, item);
     }
 }

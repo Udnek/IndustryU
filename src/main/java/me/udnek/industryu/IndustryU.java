@@ -3,7 +3,6 @@ package me.udnek.industryu;
 import me.udnek.industryu.block.Blocks;
 import me.udnek.industryu.block.MachineBlock;
 import me.udnek.industryu.item.Items;
-import me.udnek.industryu.item.MachineItem;
 import me.udnek.industryu.techincal.MachineManager;
 import me.udnek.itemscoreu.customitem.CustomItem;
 import org.bukkit.plugin.java.JavaPlugin;

@@ -1,25 +1,24 @@
 package me.udnek.industryu.block;
 
 import me.udnek.industryu.item.Items;
-import me.udnek.industryu.machine.Boiler;
+import me.udnek.industryu.machine.Furnace;
 import me.udnek.industryu.machine.abstraction.Machine;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-public class BoilerBlock extends AbstractMachineBlock{
+public class FurnaceBlock extends AbstractMachineBlock {
     @Override
-    public @NotNull String getRawId() {
-        return "boiler";
+    public ItemStack getVisualItem() {
+        return Items.FURNACE.getItem();
     }
 
     @Override
     public Machine getNewMachine() {
-        return new Boiler();
+        return new Furnace();
     }
 
     @Override
-    public ItemStack getVisualItem() {
-        return Items.BOILER.getItem();
+    public @NotNull String getRawId() {
+        return "furnace";
     }
-
 }
