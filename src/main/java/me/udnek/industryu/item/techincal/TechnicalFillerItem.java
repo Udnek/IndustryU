@@ -3,6 +3,7 @@ package me.udnek.industryu.item.techincal;
 import me.udnek.itemscoreu.customitem.ConstructableCustomItem;
 import org.bukkit.Material;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class TechnicalFillerItem extends ConstructableCustomItem {
     @Override
@@ -16,5 +17,5 @@ public class TechnicalFillerItem extends ConstructableCustomItem {
     }
 
     @Override
-    public boolean getHideTooltip() {return true;}
+    public @Nullable Boolean getHideTooltip() {return true;}
 }

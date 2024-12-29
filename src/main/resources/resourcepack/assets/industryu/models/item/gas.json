@@ -1,0 +1,6 @@
+{
+	"parent": "industryu:item/matter",
+	"textures": {
+		"0": "industryu:item/gas"
+	}
+}

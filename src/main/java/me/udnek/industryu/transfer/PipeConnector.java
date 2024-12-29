@@ -127,8 +127,8 @@ public class PipeConnector {
                     player,
                     block.getLocation(),
                     color,
-                    text,
-                    duration
+                    duration,
+                    text
             );
         }
     }

@@ -17,11 +17,6 @@ public abstract class MachineGUI extends ConstructableCustomInventory {
     protected int[] outputSlots;
 
     @Override
-    public String getRawDisplayName() {
-        return String.valueOf(new Random().nextFloat() * 100);
-    }
-
-    @Override
     protected void initialize() {
         super.initialize();
         inputSlots = getInputSlots();
@@ -39,7 +34,7 @@ public abstract class MachineGUI extends ConstructableCustomInventory {
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable(this.getRawDisplayName()).color(NamedTextColor.RED);
+        return Component.translatable(String.valueOf(new Random().nextFloat() * 100)).color(NamedTextColor.RED);
     }
 
     public abstract void synchronizeWithMachine();
@@ -93,7 +88,7 @@ public abstract class MachineGUI extends ConstructableCustomInventory {
         };
     }
 
-    protected @Nullable ItemStack takeItem(int slot, int amount){
+    protected @Nullable ItemStack takeItemAndReturn(int slot, int amount){
         ItemStack item = inventory.getItem(slot);
         if (item == null) return null;
         if (item.getAmount() < amount){

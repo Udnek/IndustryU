@@ -11,6 +11,7 @@ import me.udnek.industryu.matter.container.SpecificMatterContainer;
 import org.bukkit.Particle;
 import org.bukkit.block.BlockState;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 public class Boiler extends AbstractMachine implements GUIMachine, OutputtableMachine {
 
@@ -22,7 +23,7 @@ public class Boiler extends AbstractMachine implements GUIMachine, OutputtableMa
     protected int progress = 0;
 
     @Override
-    public void initialize(BlockState blockState) {
+    public void initialize(@NotNull BlockState blockState) {
         super.initialize(blockState);
         this.gui = new BoilerGUI(this);
         particle = new ParticleBuilder(Particle.SMOKE);
@@ -66,5 +67,5 @@ public class Boiler extends AbstractMachine implements GUIMachine, OutputtableMa
     public int getProgress() {return progress;}
 
     @Override
-    public MachineGUI getGUI() {return gui;}
+    public @NotNull MachineGUI getGUI() {return gui;}
 }

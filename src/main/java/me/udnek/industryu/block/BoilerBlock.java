@@ -13,7 +13,7 @@ public class BoilerBlock extends AbstractMachineBlock{
     }
 
     @Override
-    public Machine getNewMachine() {
+    public @NotNull Machine getNewMachine() {
         return new Boiler();
     }
 

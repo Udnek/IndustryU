@@ -1,9 +1,9 @@
 package me.udnek.industryu.techincal;
 
 import me.udnek.industryu.machine.abstraction.Machine;
-import me.udnek.itemscoreu.utils.LogUtils;
-import me.udnek.itemscoreu.utils.RightClickable;
-import me.udnek.itemscoreu.utils.TickingTask;
+import me.udnek.industryu.machine.abstraction.RightClickableMachine;
+import me.udnek.itemscoreu.util.LogUtils;
+import me.udnek.itemscoreu.util.TickingTask;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -49,7 +49,7 @@ public class MachineManager extends TickingTask {
 
     public void onRightClick(PlayerInteractEvent event){
         Machine machine = locationToMachine.get(serialize(event.getClickedBlock()));
-        if (machine instanceof RightClickable rightClickable) rightClickable.onRightClicks(event);
+        if (machine instanceof RightClickableMachine rightClickable) rightClickable.onRightClicks(event);
     }
 
 

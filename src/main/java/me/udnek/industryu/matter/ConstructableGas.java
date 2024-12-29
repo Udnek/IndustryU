@@ -1,12 +1,14 @@
 package me.udnek.industryu.matter;
 
-import me.udnek.itemscoreu.utils.ItemUtils;
+import me.udnek.industryu.IndustryU;
+import me.udnek.itemscoreu.util.ItemUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.FireworkEffectMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
 
 public class ConstructableGas implements Gas{
 
@@ -24,17 +26,17 @@ public class ConstructableGas implements Gas{
     }
 
     @Override
-    public String getName() {
+    public @NotNull String getName() {
         return name;
     }
 
     @Override
-    public ItemStack getVisualRepresentation() {
+    public @NotNull ItemStack getVisualRepresentation() {
         ItemStack itemStack = new ItemStack(Material.FIREWORK_STAR);
+        ItemUtils.setFireworkColor(itemStack, getColor());
         ItemMeta itemMeta = itemStack.getItemMeta();
-        ItemUtils.setFireworkColor((FireworkEffectMeta) itemMeta, getColor());
         itemMeta.displayName(Component.text(name));
-        itemMeta.setCustomModelData(1001);
+        itemMeta.setItemModel(new NamespacedKey(IndustryU.getInstance(), "gas"));
         itemMeta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 
         itemStack.setItemMeta(itemMeta);

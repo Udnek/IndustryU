@@ -1,8 +1,9 @@
 package me.udnek.industryu.machine.abstraction;
 
 import me.udnek.industryu.transfer.Transferable;
+import org.jetbrains.annotations.NotNull;
 
 public interface InputtableMachine extends Machine {
-    boolean acceptsInput(Transferable transferable);
-    void takeInput(Transferable transferable);
+    boolean acceptsInput(@NotNull Transferable transferable);
+    void takeInput(@NotNull Transferable transferable);
 }

@@ -13,7 +13,7 @@ public class FurnaceBlock extends AbstractMachineBlock {
     }
 
     @Override
-    public Machine getNewMachine() {
+    public @NotNull Machine getNewMachine() {
         return new Furnace();
     }
 

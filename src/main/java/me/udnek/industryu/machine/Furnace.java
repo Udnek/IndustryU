@@ -10,12 +10,13 @@ import me.udnek.industryu.matter.container.MatterContainer;
 import me.udnek.industryu.matter.container.SpecificMatterContainer;
 import me.udnek.industryu.transfer.Transferable;
 import org.bukkit.block.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 public class Furnace extends AbstractMachine implements GUIMachine, InputtableMachine {
     protected FurnaceGUI gui;
     protected SpecificMatterContainer steamContainer = new SpecificMatterContainer(Matters.STEAM, 1000);
     @Override
-    public void initialize(BlockState blockState) {
+    public void initialize(@NotNull BlockState blockState) {
         super.initialize(blockState);
         gui = new FurnaceGUI(this);
     }
@@ -28,19 +29,19 @@ public class Furnace extends AbstractMachine implements GUIMachine, InputtableMa
 
     public SpecificMatterContainer getSteamContainer() {return steamContainer;}
     @Override
-    public MachineGUI getGUI() {
+    public @NotNull MachineGUI getGUI() {
         return gui;
     }
 
     @Override
-    public boolean acceptsInput(Transferable transferable) {
+    public boolean acceptsInput(@NotNull Transferable transferable) {
         if (transferable instanceof MatterContainer otherContainer){
             return steamContainer.canTakeAnyFrom(otherContainer);
         }
         return false;
     }
     @Override
-    public void takeInput(Transferable transferable) {
+    public void takeInput(@NotNull Transferable transferable) {
         steamContainer.takeFrom((MatterContainer) transferable);
     }
 }

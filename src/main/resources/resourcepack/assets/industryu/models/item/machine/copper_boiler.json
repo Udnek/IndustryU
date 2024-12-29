@@ -1,0 +1,9 @@
+{
+	"parent": "industryu:item/machine/machine_template",
+	"textures": {
+		"side": "industryu:item/machine/copper_base_side",
+		"top": "industryu:item/machine/copper_base_top",
+		"bottom": "industryu:item/machine/copper_base_bottom",
+		"front": "industryu:item/machine/copper_boiler_overlay"
+	}
+}

@@ -1,5 +1,7 @@
 package me.udnek.industryu.gui.abstraction;
 
+import org.jetbrains.annotations.NotNull;
+
 public interface GUIHolder {
-    MachineGUI getGUI();
+     @NotNull MachineGUI getGUI();
 }
